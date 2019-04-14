@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,13 +29,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class BookDetailActivity extends ActionBarActivity {
+public class BookDetailActivity extends AppCompatActivity {
     private ImageView ivBookCover;
     private TextView tvTitle;
     private TextView tvAuthor;
     private TextView tvPublisher;
     private TextView tvPageCount;
-    private BookClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,7 @@ public class BookDetailActivity extends ActionBarActivity {
         tvTitle.setText(book.getTitle());
         tvAuthor.setText(book.getAuthor());
               // fetch extra book data from books API
-        client = new BookClient();
+        BookClient client = new BookClient();
 
         // 주석이 시작하는 부분
         client.getExtraBookDetails(book.getOpenLibraryId(), new JsonHttpResponseHandler() {
@@ -112,8 +111,8 @@ public class BookDetailActivity extends ActionBarActivity {
     }
 
     private void setShareIntent() {
-        ImageView ivImage = (ImageView) findViewById(R.id.ivBookCover);
-        final TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
+        ImageView ivImage = findViewById(R.id.ivBookCover);
+        final TextView tvTitle = findViewById(R.id.tvTitle);
         // Get access to the URI for the bitmap
         Uri bmpUri = getLocalBitmapUri(ivImage);
         // Construct a ShareIntent with link to image

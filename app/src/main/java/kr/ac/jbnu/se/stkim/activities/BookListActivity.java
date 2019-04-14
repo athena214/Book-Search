@@ -3,7 +3,7 @@ package kr.ac.jbnu.se.stkim.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
@@ -12,11 +12,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import kr.ac.jbnu.se.stkim.R;
 import kr.ac.jbnu.se.stkim.adapters.BookAdapter;
 import kr.ac.jbnu.se.stkim.models.Book;
 import kr.ac.jbnu.se.stkim.net.BookClient;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -25,19 +32,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 
 
-public class BookListActivity extends ActionBarActivity {
+public class BookListActivity extends AppCompatActivity {
     public static final String BOOK_DETAIL_KEY = "book";
     private ListView lvBooks;
     private BookAdapter bookAdapter;
-    private BookClient client;
     private ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {    // 액티비티를 생성하는 기본적인 코드
         super.onCreate(savedInstanceState);                 // {} -> 액티비티가 실행될 때 수행해야 하는 작업
         setContentView(R.layout.activity_book_list);
+        FirebaseApp.initializeApp(this);
         lvBooks = (ListView) findViewById(R.id.lvBooks);
         ArrayList<Book> aBooks = new ArrayList<Book>();
         // initialize the adapter
@@ -46,6 +56,36 @@ public class BookListActivity extends ActionBarActivity {
         lvBooks.setAdapter(bookAdapter);
         progress = (ProgressBar) findViewById(R.id.progress);
         setupBookSelectedListener();
+
+        // setValue 쓰기
+//        User model = new User();
+//        model.setId("athena");
+//        model.setName("현명");
+//        model.setPw("123");
+//
+//        FirebaseDatabase.getInstance()
+//                .getReference("a")
+//                .child("b")
+//                .child("name")
+//                .setValue("현웅");
+
+//      getValue 읽기
+//        FirebaseDatabase.getInstance()
+//                .getReference("a")
+//                .child("b")
+//                .addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        User model = dataSnapshot.getValue(User.class);
+//                        Toast.makeText(BookListActivity.this, model.getPw(), Toast.LENGTH_LONG).show();
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                        Toast.makeText(BookListActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
 
     }
 
@@ -66,7 +106,7 @@ public class BookListActivity extends ActionBarActivity {
     private void fetchBooks(String query) {
         // Show progress bar before making network request
         progress.setVisibility(ProgressBar.VISIBLE);
-        client = new BookClient();
+        BookClient client = new BookClient();
         client.getBooks(query, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -74,7 +114,7 @@ public class BookListActivity extends ActionBarActivity {
                     // hide progress bar
                     progress.setVisibility(ProgressBar.GONE);
                     JSONArray docs = null;
-                    if(response != null) {
+                    if (response != null) {
                         // Get the docs json array
 
                         Log.d("tag", "result:" + response.toString());
@@ -96,8 +136,7 @@ public class BookListActivity extends ActionBarActivity {
                 }
             }
 
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response)
-            {
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
                 Log.d("tag", "result:" + response.toString(), throwable);
 
                 progress.setVisibility(ProgressBar.GONE);
