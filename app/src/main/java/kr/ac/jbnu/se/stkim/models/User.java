@@ -4,16 +4,16 @@ package kr.ac.jbnu.se.stkim.models;
  * author : Hyunmyung
  */
 public class User {
-    private String id;
+    private String email;
     private String name;
-    private String pw;
+    private String nickName;
 
-    public String getId() {
-        return id;
+    public String getEmail() {
+        return email;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
@@ -24,23 +24,9 @@ public class User {
         this.name = name;
     }
 
-    public String getPw() {
-        return pw;
-    }
+    public String getNickName() { return nickName; }
 
-    public void setPw(String pw) {
-        this.pw = pw;
-    }
-
-
-    /**
-    * 테스트로 만든 메소드임
-     *
-     * @param a 파라미터 1번임
-     * @param b 파라미터 2번임
-     * @return 둘이 합친거임
-     */
-    public String metthod(String a, String b) {
-        return a + b;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

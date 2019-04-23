@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import kr.ac.jbnu.se.stkim.R;
 import kr.ac.jbnu.se.stkim.models.Book;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -37,11 +38,11 @@ public class BookAdapter extends ArrayAdapter<Book> {
         ViewHolder viewHolder; // view lookup cache stored in tag
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.item_book, parent, false);
-            viewHolder.ivCover = (ImageView)convertView.findViewById(R.id.ivBookCover);
-            viewHolder.tvTitle = (TextView)convertView.findViewById(R.id.tvTitle);
-            viewHolder.tvAuthor = (TextView)convertView.findViewById(R.id.tvAuthor);
+            viewHolder.ivCover = (ImageView) convertView.findViewById(R.id.ivBookCover);
+            viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
+            viewHolder.tvAuthor = (TextView) convertView.findViewById(R.id.tvAuthor);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

@@ -12,18 +12,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import kr.ac.jbnu.se.stkim.R;
-import kr.ac.jbnu.se.stkim.adapters.BookAdapter;
-import kr.ac.jbnu.se.stkim.models.Book;
-import kr.ac.jbnu.se.stkim.net.BookClient;
 
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -32,9 +22,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
+
+import kr.ac.jbnu.se.stkim.R;
+import kr.ac.jbnu.se.stkim.adapters.BookAdapter;
+import kr.ac.jbnu.se.stkim.models.Book;
+import kr.ac.jbnu.se.stkim.net.BookClient;
 
 
 public class BookListActivity extends AppCompatActivity {
@@ -69,35 +61,32 @@ public class BookListActivity extends AppCompatActivity {
 //                .child("name")
 //                .setValue("현웅");
 
-//      getValue 읽기
-//        FirebaseDatabase.getInstance()
-//                .getReference("a")
-//                .child("b")
-//                .addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        User model = dataSnapshot.getValue(User.class);
-//                        Toast.makeText(BookListActivity.this, model.getPw(), Toast.LENGTH_LONG).show();
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//                        Toast.makeText(BookListActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
+////      getValue 읽기
+////        FirebaseDatabase.getInstance()
+////                .getReference("a")
+////                .child("b")
+////                .addListenerForSingleValueEvent(new ValueEventListener() {
+////                    @Override
+////                    public void onDataChange(DataSnapshot dataSnapshot) {
+////                        User model = dataSnapshot.getValue(User.class);
+////                        Toast.makeText(BookListActivity.this, model.getPw(), Toast.LENGTH_LONG).show();
+////
+////                    }
+////
+////                    @Override
+////                    public void onCancelled(DatabaseError databaseError) {
+////                        Toast.makeText(BookListActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
 //                    }
 //                });
 
     }
 
     public void setupBookSelectedListener() {
-        lvBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Launch the detail view passing book as an extra
-                Intent intent = new Intent(BookListActivity.this, BookDetailActivity.class);
-                intent.putExtra(BOOK_DETAIL_KEY, bookAdapter.getItem(position));
-                startActivity(intent);
-            }
+        lvBooks.setOnItemClickListener((parent, view, position, id) -> {
+            // Launch the detail view passing book as an extra
+            Intent intent = new Intent(BookListActivity.this, BookDetailActivity.class);
+            intent.putExtra(BOOK_DETAIL_KEY, bookAdapter.getItem(position));
+            startActivity(intent);
         });
     }
 

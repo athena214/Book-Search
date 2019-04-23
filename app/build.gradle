@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "kr.ac.jbnu.se.stkim"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -41,5 +41,6 @@ dependencies {
 
     // 구글 플레이
     implementation 'com.google.android.gms:play-services-auth:16.0.1' //12.0.1
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
 }
 apply plugin: 'com.google.gms.google-services'
